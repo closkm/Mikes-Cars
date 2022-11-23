@@ -1,8 +1,9 @@
-﻿using System.Data.SqlClient;
+﻿using MikesCars.Interfaces;
+using System.Data.SqlClient;
 
 namespace MikesCars.Repositories
 {
-    public class CartRepository
+    public class CartRepository : ICart
     {
         private readonly IConfiguration _config;
         public CartRepository(IConfiguration config)

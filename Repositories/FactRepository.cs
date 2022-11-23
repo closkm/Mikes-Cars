@@ -1,8 +1,9 @@
-﻿using System.Data.SqlClient;
+﻿using MikesCars.Interfaces;
+using System.Data.SqlClient;
 
 namespace MikesCars.Repositories
 {
-        public class FactRepository
+        public class FactRepository : IFact
         {
             private readonly IConfiguration _config;
             public FactRepository(IConfiguration config)
