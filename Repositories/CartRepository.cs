@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace MikesCars.Repositories
 {
-    public class CartRepository : ICart
+    public class CartRepository : ICartRepository
     {
         private readonly IConfiguration _config;
         public CartRepository(IConfiguration config)

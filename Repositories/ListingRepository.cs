@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace MikesCars.Repositories
 {
-    public class ListingRepository : IListing
+    public class ListingRepository : IListingRepository
     {
         private readonly IConfiguration _config;
 
