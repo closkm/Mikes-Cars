@@ -1,8 +1,9 @@
-﻿using System.Data.SqlClient;
+﻿using MikesCars.Interfaces;
+using System.Data.SqlClient;
 
 namespace MikesCars.Repositories
 {
-    public class ImageRepository
+    public class ImageRepository : IImage
     {
         private readonly IConfiguration _config;
 
