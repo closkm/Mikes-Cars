@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace MikesCars.Repositories
 {
-        public class FactRepository : IFact
+        public class FactRepository : IFactRepository
         {
             private readonly IConfiguration _config;
             public FactRepository(IConfiguration config)

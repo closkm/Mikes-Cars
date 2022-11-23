@@ -1,6 +1,6 @@
 ﻿namespace MikesCars.Interfaces
 {
-    public interface IListing
+    public interface IUserRepository
     {
     }
 }

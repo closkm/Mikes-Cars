@@ -1,6 +1,6 @@
 ﻿namespace MikesCars.Interfaces
 {
-    public interface IImage
+    public interface IFactRepository
     {
     }
 }

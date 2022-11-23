@@ -1,6 +1,6 @@
 ﻿namespace MikesCars.Interfaces
 {
-    public interface ICart
+    public interface IListingRepository
     {
     }
 }
