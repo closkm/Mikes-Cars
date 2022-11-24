@@ -145,5 +145,24 @@ namespace MikesCars.Repositories
                 }
             }
         }
+
+        public void UpdateFavorites(int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE [listing]
+                                SET favorites = favorites + 1
+                                WHERE id = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
