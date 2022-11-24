@@ -9,5 +9,6 @@ namespace MikesCars.Interfaces
         void PostNewListing(Listing listing);
         void EditListing(Listing listing);
         void UpdateFavorites(int listingId);
+        void DeleteFromFavorite(int listingId);
     }
 }
