@@ -22,5 +22,12 @@ namespace MikesCars.Controllers
             _favoriteRepo.AddToFavTable(userId, listingId);
             _listingRepo.UpdateFavorites(listingId);
         }
+
+        [HttpDelete("DeleteFromFavorite/{userId}/{listingId}")]
+        public void DeleteFromFavorite(int userId, int listingId)
+        {
+            _favoriteRepo.DeleteFromFavorite(userId, listingId);
+            _listingRepo.DeleteFromFavorite(listingId);
+        }
     }
 }
