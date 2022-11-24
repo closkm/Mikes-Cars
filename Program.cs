@@ -14,6 +14,7 @@ builder.Services.AddTransient<IFactRepository, FactRepository>();
 builder.Services.AddTransient<IImageRepository, ImageRepository>();
 builder.Services.AddTransient<IListingRepository, ListingRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IFavoriteRepository, FavoriteRepository>();
 
 var app = builder.Build();
 

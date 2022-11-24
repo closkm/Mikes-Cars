@@ -8,5 +8,6 @@ namespace MikesCars.Interfaces
         Listing GetListingById(int id);
         void PostNewListing(Listing listing);
         void EditListing(Listing listing);
+        void UpdateFavorites(int listingId);
     }
 }
