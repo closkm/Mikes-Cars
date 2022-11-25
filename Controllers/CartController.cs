@@ -13,5 +13,11 @@ namespace MikesCars.Controllers
         {
             _cartRepo = cartRepo;
         }
+
+        [HttpPost("{listingId}/{userId}")]
+        public void AddToCart(int listingId, int userId)
+        {
+            _cartRepo.AddToCart(listingId, userId);
+        }
     }
 }

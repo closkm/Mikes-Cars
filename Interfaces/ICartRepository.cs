@@ -2,5 +2,6 @@
 {
     public interface ICartRepository
     {
+        void AddToCart(int listingId, int userId);
     }
 }
