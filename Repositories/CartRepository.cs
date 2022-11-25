@@ -17,5 +17,25 @@ namespace MikesCars.Repositories
                 return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
             }
         }
+
+        public void AddToCart(int listingId, int userId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                INSERT INTO [cart](userId, listingId, purchased)
+                                VALUES(@userId, @listingId, 0)
+                            ";
+
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
