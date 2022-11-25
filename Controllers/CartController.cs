@@ -14,10 +14,16 @@ namespace MikesCars.Controllers
             _cartRepo = cartRepo;
         }
 
-        [HttpPost("{listingId}/{userId}")]
+        [HttpPost("addToCart/{listingId}/{userId}")]
         public void AddToCart(int listingId, int userId)
         {
             _cartRepo.AddToCart(listingId, userId);
+        }
+
+        [HttpDelete("deleteFromCart/{listingId}/{userId}")]
+        public void DeleteFromCart(int listingId, int userId)
+        {
+            _cartRepo.DeleteFromCart(listingId, userId);
         }
     }
 }

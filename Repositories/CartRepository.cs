@@ -37,5 +37,26 @@ namespace MikesCars.Repositories
                 }
             }
         }
+
+        public void DeleteFromCart(int listingId, int userId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                DELETE FROM [cart]
+                                WHERE userId = @userId
+                                AND listingId = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
