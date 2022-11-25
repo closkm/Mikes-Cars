@@ -220,8 +220,10 @@ namespace MikesCars.Repositories
                     cmd.ExecuteNonQuery();
 
                 }
-
-                public void UpdateFavorites(int listingId)
+            }
+        } 
+        //fixed
+        public void UpdateFavorites(int listingId)
         {
             using (SqlConnection conn = Connection)
             {
