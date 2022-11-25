@@ -203,7 +203,25 @@ namespace MikesCars.Repositories
             }
         }
 
-        public void UpdateFavorites(int listingId)
+        public void Purchased(int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE [listing]
+                                SET purchased = 1
+                                WHERE id = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+                    cmd.ExecuteNonQuery();
+
+                }
+
+                public void UpdateFavorites(int listingId)
         {
             using (SqlConnection conn = Connection)
             {
