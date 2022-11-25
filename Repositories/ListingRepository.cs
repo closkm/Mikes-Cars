@@ -20,6 +20,44 @@ namespace MikesCars.Repositories
             }
         }
 
+        public void AddToCart(int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE [listing]
+                                SET inCart = 1
+                                WHERE id = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeleteFromCart(int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE [listing]
+                                SET inCart = 0
+                                WHERE id = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void DeleteFromFavorite(int listingId)
         {
             using (SqlConnection conn = Connection)
