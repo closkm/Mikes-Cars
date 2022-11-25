@@ -221,8 +221,8 @@ namespace MikesCars.Repositories
 
                 }
             }
-        }
-
+        } 
+        //fixed
         public void UpdateFavorites(int listingId)
         {
             using (SqlConnection conn = Connection)
