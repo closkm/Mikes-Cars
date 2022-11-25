@@ -39,5 +39,11 @@ namespace MikesCars.Controllers
         {
             _listingRepo.EditListing(listing);
         }
+
+        [HttpPut("Purchased/{listingId}")]
+        public void Purchased(int listingId)
+        {
+            _listingRepo.Purchased(listingId);
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace MikesCars.Interfaces
         void DeleteFromFavorite(int listingId);
         void AddToCart(int listingId);
         void DeleteFromCart(int listingId);
+        void Purchased(int listingId);
     }
 }
