@@ -21,6 +21,39 @@ namespace MikesCars.Repositories
             }
         }
 
+        public bool CheckForUser(string firebaseId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [user]
+                                WHERE firebaseId = @firebaseId
+                            ";
+                    cmd.Parameters.AddWithValue("@firebaseId", firebaseId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<User> users = new List<User>();
+                        while (reader.Read())
+                        {
+                            User user = new User()
+                            {
+                                id = reader.GetInt32(reader.GetOrdinal("id")),
+                                firstName = reader.GetString(reader.GetOrdinal("firstName")),
+                                lastName = reader.GetString(reader.GetOrdinal("lastName")),
+                                firebaseId = reader.GetString(reader.GetOrdinal("firebaseId"))
+                            };
+                            users.Add(user);
+                        }
+                        return users.Count > 0;
+                    }
+                }
+            }
+        }
+
         public void EditLoggedInUser(User user)
         {
             using (SqlConnection conn = Connection)
@@ -98,6 +131,25 @@ namespace MikesCars.Repositories
                         }
                         return user;
                     }
+                }
+            }
+        }
+
+        public void RegisterUser(User user)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                INSERT INTO [user](firstName, lastName, firebaseId)
+                                VALUES(@firstName, @lastName, @firebaseId)
+                            ";
+                    cmd.Parameters.AddWithValue("@firstName", user.firstName);
+                    cmd.Parameters.AddWithValue("@lastName", user.lastName);
+                    cmd.Parameters.AddWithValue("@firebaseId", user.firebaseId);
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

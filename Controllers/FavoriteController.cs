@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MikesCars.Interfaces;
+using MikesCars.Models;
 
 namespace MikesCars.Controllers
 {
@@ -28,6 +29,20 @@ namespace MikesCars.Controllers
         {
             _favoriteRepo.DeleteFromFavorite(userId, listingId);
             _listingRepo.DeleteFromFavorite(listingId);
+        }
+
+        [HttpGet("GetUserFavorites/{userId}")]
+        public List<Listing> GetUserFavorites(int userId)
+        {
+            List<int> listingIds = _favoriteRepo.GetIdsInFav(userId);
+            List<Listing> listings = new List<Listing>();
+
+            foreach(int id in listingIds)
+            {
+                Listing listing = _favoriteRepo.GetAllItemsInFavorite(id)[0];
+                listings.Add(listing);
+            }
+            return listings;
         }
     }
 }

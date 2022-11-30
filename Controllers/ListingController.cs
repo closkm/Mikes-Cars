@@ -29,6 +29,7 @@ namespace MikesCars.Controllers
         }
 
         [HttpPost("NewListing")]
+        //needs to return int
         public void PostNewListing(Listing listing)
         {
             _listingRepo.PostNewListing(listing);

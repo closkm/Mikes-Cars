@@ -193,7 +193,7 @@ namespace MikesCars.Repositories
                     cmd.Parameters.AddWithValue("@maker", listing.maker);
                     cmd.Parameters.AddWithValue("@address", listing.address);
                     cmd.Parameters.AddWithValue("@price", listing.price);
-                    cmd.Parameters.AddWithValue("@dateOfListing", listing.dateOfListing);
+                    cmd.Parameters.AddWithValue("@dateOfListing", DateTime.Now);
                     cmd.Parameters.AddWithValue("@favorites", listing.favorites);
                     cmd.Parameters.AddWithValue("@purchased", listing.purchased);
                     cmd.Parameters.AddWithValue("@inCart", listing.inCart);
