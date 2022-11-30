@@ -32,5 +32,18 @@ namespace MikesCars.Controllers
         {
             _userRepo.EditLoggedInUser(user);
         }
+
+        [HttpGet("checkForUser/{firebaseId}")]
+        public bool CheckForUser(string firebaseId)
+        {
+            bool result = _userRepo.CheckForUser(firebaseId);
+            return result;
+        }
+
+        [HttpPost("registerUser")]
+        public void RegisterUser(User user)
+        {
+            _userRepo.RegisterUser(user);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MikesCars.Interfaces;
+using MikesCars.Models;
 
 namespace MikesCars.Controllers
 {
@@ -28,6 +29,20 @@ namespace MikesCars.Controllers
         {
             _cartRepo.DeleteFromCart(listingId, userId);
             _listingRepo.DeleteFromCart(listingId);
+        }
+
+        [HttpGet("{userId}")]
+        public List<Listing> GetAllItemsInCart(int userId)
+        {
+            List<int> ints = _cartRepo.GetIdsInCart(userId);
+            List<Listing> listings = new List<Listing>();
+
+            foreach (int id in ints)
+            {
+                Listing listing = _cartRepo.GetAllItemsInCart(id)[0];
+                listings.Add(listing);
+            }
+            return listings;
         }
     }
 }
