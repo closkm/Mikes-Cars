@@ -44,5 +44,12 @@ namespace MikesCars.Controllers
             }
             return listings;
         }
+
+        [HttpGet("CheckIfFav/{userId}/{listingId}")]
+
+        public bool CheckIfFav(int userId, int listingId)
+        {
+            return _favoriteRepo.CheckIfFav(userId, listingId);
+        }
     }
 }
