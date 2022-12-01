@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MikesCars.Interfaces;
+using MikesCars.Models;
 
 namespace MikesCars.Controllers
 {
@@ -12,6 +13,12 @@ namespace MikesCars.Controllers
         public FactController(IFactRepository factRepo)
         {
             _factRepo = factRepo;
+        }
+
+        [HttpPost]
+        public void PostFacts(Fact fact)
+        {
+            _factRepo.PostFacts(fact);
         }
      }
 }

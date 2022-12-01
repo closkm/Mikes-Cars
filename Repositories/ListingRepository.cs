@@ -176,7 +176,7 @@ namespace MikesCars.Repositories
             }
         }
 
-        public void PostNewListing(Listing listing)
+        public int PostNewListing(Listing listing)
         {
             using (SqlConnection conn = Connection)
             {
@@ -186,6 +186,7 @@ namespace MikesCars.Repositories
                     cmd.CommandText = @"
                                 INSERT INTO [listing](userId, type, maker, address, price, dateOfListing, favorites, purchased, inCart)
                                 VALUES(@userId, @type, @maker, @address, @price, @dateOfListing, @favorites, @purchased, @inCart)
+                                SELECT * from [listing] where id = SCOPE_IDENTITY();
                             ";
 
                     cmd.Parameters.AddWithValue("@userId", listing.userId);
@@ -198,9 +199,19 @@ namespace MikesCars.Repositories
                     cmd.Parameters.AddWithValue("@purchased", listing.purchased);
                     cmd.Parameters.AddWithValue("@inCart", listing.inCart);
 
-                    cmd.ExecuteNonQuery();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        int id = 0;
+                        while (reader.Read())
+                        {
+                            id = reader.GetInt32(reader.GetOrdinal("id"));
+                        }
+                        return id;
+                    }
                 }
             }
+
         }
 
         public void Purchased(int listingId)

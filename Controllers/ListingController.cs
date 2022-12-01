@@ -10,9 +10,11 @@ namespace MikesCars.Controllers
     public class ListingController : ControllerBase
     {
         private IListingRepository _listingRepo;
-        public ListingController(IListingRepository listingRepo)
+        private IFactRepository _factRepo;
+        public ListingController(IListingRepository listingRepo, IFactRepository factRepo)
         {
             _listingRepo = listingRepo;
+            _factRepo = factRepo;
         }
 
 
@@ -30,9 +32,38 @@ namespace MikesCars.Controllers
 
         [HttpPost("NewListing")]
         //needs to return int
-        public void PostNewListing(Listing listing)
+        public int PostNewListing(ListingFact listingfact)
         {
-            _listingRepo.PostNewListing(listing);
+            Listing listing = new Listing()
+            {
+                id = listingfact.id,
+                userId = listingfact.userId,
+                type = listingfact.type,
+                maker = listingfact.maker,
+                address = listingfact.address,
+                price = listingfact.price,
+                dateOfListing = listingfact.dateOfListing,
+                favorites = listingfact.favorites,
+                purchased = listingfact.purchased,
+                inCart = listingfact.inCart
+            };
+
+            Fact fact = new Fact()
+            {
+                id = listingfact.id,
+                electric = listingfact.electric,
+                listingId = listingfact.id,
+                mpg = listingfact.mpg,
+                crashes = listingfact.crashes,
+                miles = listingfact.miles,
+                warranty = listingfact.warranty
+            };
+
+            int id = _listingRepo.PostNewListing(listing);
+            fact.listingId = id;
+
+            _factRepo.PostFacts(fact);
+            return id;
         }
 
         [HttpPut("NewListing")]

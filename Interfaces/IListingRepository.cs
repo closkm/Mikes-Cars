@@ -6,7 +6,7 @@ namespace MikesCars.Interfaces
     {
         List<Listing> GetAllAvailableListings();
         Listing GetListingById(int id);
-        void PostNewListing(Listing listing);
+        int PostNewListing(Listing listing);
         void EditListing(Listing listing);
         void UpdateFavorites(int listingId);
         void DeleteFromFavorite(int listingId);
