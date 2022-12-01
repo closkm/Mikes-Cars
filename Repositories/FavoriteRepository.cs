@@ -39,6 +39,34 @@ namespace MikesCars.Repositories
             }
         }
 
+        public bool CheckIfFav(int userId, int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [favorite]
+                                WHERE userId = @userId
+                                AND listingId = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            }
+        }
+
         public void DeleteFromFavorite(int userId, int listingId)
         {
             using (SqlConnection conn = Connection)
