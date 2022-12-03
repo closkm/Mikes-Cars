@@ -8,5 +8,6 @@ namespace MikesCars.Interfaces
         void DeleteFromCart(int listingId, int userId);
         List<int> GetIdsInCart(int userId);
         List<Listing> GetAllItemsInCart(int id);
+        void Purchased(int userId, int listingId);
     }
 }
