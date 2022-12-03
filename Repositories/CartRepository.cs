@@ -111,6 +111,7 @@ namespace MikesCars.Repositories
                                 SELECT *
                                 FROM [cart]
                                 WHERE userId = @userId
+                                AND purchased = 0
                             ";
 
                     cmd.Parameters.AddWithValue("@userId", userId);
@@ -124,6 +125,27 @@ namespace MikesCars.Repositories
                         }
                         return listings;
                     }
+                }
+            }
+        }
+
+        public void Purchased(int userId, int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE [cart]
+                                SET purchased = 1
+                                WHERE listingId = @listingId
+                                AND userId = @userId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

@@ -11,10 +11,12 @@ namespace MikesCars.Controllers
     {
         private IListingRepository _listingRepo;
         private IFactRepository _factRepo;
-        public ListingController(IListingRepository listingRepo, IFactRepository factRepo)
+        private ICartRepository _cartRepo;
+        public ListingController(IListingRepository listingRepo, IFactRepository factRepo, ICartRepository cartRepo)
         {
             _listingRepo = listingRepo;
             _factRepo = factRepo;
+            _cartRepo = cartRepo;
         }
 
 
@@ -72,10 +74,11 @@ namespace MikesCars.Controllers
             _listingRepo.EditListing(listing);
         }
 
-        [HttpPut("Purchased/{listingId}")]
-        public void Purchased(int listingId)
+        [HttpPut("Purchased/{userId}/{listingId}")]
+        public void Purchased(int userId, int listingId)
         {
             _listingRepo.Purchased(listingId);
+            _cartRepo.Purchased(userId, listingId);
         }
     }
 }

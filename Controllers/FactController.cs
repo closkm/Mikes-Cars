@@ -20,5 +20,11 @@ namespace MikesCars.Controllers
         {
             _factRepo.PostFacts(fact);
         }
+
+        [HttpGet("{listingId}")]
+        public Fact GetFacts(int listingId)
+        {
+            return _factRepo.GetFacts(listingId);
+        }
      }
 }

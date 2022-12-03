@@ -19,6 +19,39 @@ namespace MikesCars.Repositories
                 }
             }
 
+        public Fact GetFacts(int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [fact]
+                                WHERE listingId = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        Fact fact = new Fact();
+                        while (reader.Read())
+                        {
+                            fact.id = reader.GetInt32(reader.GetOrdinal("id"));
+                            fact.electric = reader.GetBoolean(reader.GetOrdinal("electric"));
+                            fact.listingId = 0;
+                            fact.mpg = reader.GetDouble(reader.GetOrdinal("mpg"));
+                            fact.crashes = reader.GetInt32(reader.GetOrdinal("crashes"));
+                            fact.miles = reader.GetInt32(reader.GetOrdinal("miles"));
+                            fact.warranty = reader.GetBoolean(reader.GetOrdinal("warranty"));
+                        }
+                        return fact;
+                    }
+                }
+            }
+        }
+
         public void PostFacts(Fact fact)
         {
             using (SqlConnection conn = Connection)
