@@ -22,6 +22,25 @@ namespace MikesCars.Repositories
             }
         }
 
+        public void DeleteImage(int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                DELETE FROM [image]
+                                WHERE listingId = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public List<ImageModel> GetListingImages(int listingId)
         {
             using (SqlConnection conn = Connection)
@@ -41,12 +60,11 @@ namespace MikesCars.Repositories
                         List<ImageModel> images = new List<ImageModel>();
                         while (reader.Read())
                         {
-                            var imageStream = reader.GetStream(reader.GetOrdinal("img"));
                             ImageModel image = new ImageModel()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("id")),
                                 ListingId = listingId,
-                                //img = Image.FromStream(imageStream),
+                                Img = reader.GetString(reader.GetOrdinal("img")),
                                 DisplayOrder = reader.GetInt32(reader.GetOrdinal("displayOrder"))
                             };
                             images.Add(image);
@@ -66,9 +84,10 @@ namespace MikesCars.Repositories
                 {
                     cmd.CommandText = @"
                                 INSERT INTO [image](listingId, displayOrder, img)
-                                VALUES(1008, @displayOrder, @image)
+                                VALUES(@listingId, @displayOrder, @image)
                             ";
 
+                    cmd.Parameters.AddWithValue("@listingId", image.ListingId);
                     cmd.Parameters.AddWithValue("@displayOrder", image.DisplayOrder);
                     cmd.Parameters.AddWithValue("@image", image.Img);
 

@@ -9,5 +9,6 @@ namespace MikesCars.Interfaces
         List<int> GetIdsInFav(int userId);
         List<Listing> GetAllItemsInFavorite(int listingId);
         bool CheckIfFav(int userId, int listingId);
+        void DeleteFavorite(int listingId);
     }
 }

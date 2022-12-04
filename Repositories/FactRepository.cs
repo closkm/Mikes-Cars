@@ -19,6 +19,25 @@ namespace MikesCars.Repositories
                 }
             }
 
+        public void DeleteFact(int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                DELETE FROM [fact]
+                                WHERE listingId = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public Fact GetFacts(int listingId)
         {
             using (SqlConnection conn = Connection)

@@ -39,6 +39,33 @@ namespace MikesCars.Repositories
             }
         }
 
+        public bool CheckIfUsersCar(int userId, int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [listing]
+                                WHERE userId = @userId
+                                AND id = @listingId
+                            ";
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            }
+        }
+
         public void DeleteFromCart(int listingId)
         {
             using (SqlConnection conn = Connection)
@@ -72,6 +99,25 @@ namespace MikesCars.Repositories
                             ";
 
                     cmd.Parameters.AddWithValue("@listingId", listingId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeleteListing(int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                DELETE FROM [listing]
+                                WHERE id = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+
                     cmd.ExecuteNonQuery();
                 }
             }

@@ -6,5 +6,6 @@ namespace MikesCars.Interfaces
     {
         List<ImageModel> GetListingImages(int listingId);
         void PostNewImage(ImageModel image);
+        void DeleteImage(int listingId);
     }
 }

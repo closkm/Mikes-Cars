@@ -6,5 +6,6 @@ namespace MikesCars.Interfaces
     {
         void PostFacts(Fact fact);
         Fact GetFacts(int listingId);
+        void DeleteFact(int listingId);
     }
 }
