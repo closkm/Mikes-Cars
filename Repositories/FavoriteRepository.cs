@@ -67,6 +67,25 @@ namespace MikesCars.Repositories
             }
         }
 
+        public void DeleteFavorite(int listingId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                DELETE FROM [favorite]
+                                WHERE listingId = @listingId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@listingId", listingId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void DeleteFromFavorite(int userId, int listingId)
         {
             using (SqlConnection conn = Connection)

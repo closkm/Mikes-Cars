@@ -13,5 +13,7 @@ namespace MikesCars.Interfaces
         void AddToCart(int listingId);
         void DeleteFromCart(int listingId);
         void Purchased(int listingId);
+        bool CheckIfUsersCar(int userId, int listingId);
+        void DeleteListing(int listingId);
     }
 }

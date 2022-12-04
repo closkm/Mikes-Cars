@@ -12,11 +12,15 @@ namespace MikesCars.Controllers
         private IListingRepository _listingRepo;
         private IFactRepository _factRepo;
         private ICartRepository _cartRepo;
-        public ListingController(IListingRepository listingRepo, IFactRepository factRepo, ICartRepository cartRepo)
+        private IImageRepository _imageRepo;
+        private IFavoriteRepository _favoriteRepo;
+        public ListingController(IListingRepository listingRepo, IFactRepository factRepo, ICartRepository cartRepo, IImageRepository imageRepo, IFavoriteRepository favoriteRepo)
         {
             _listingRepo = listingRepo;
             _factRepo = factRepo;
             _cartRepo = cartRepo;
+            _imageRepo = imageRepo;
+            _favoriteRepo = favoriteRepo;
         }
 
 
@@ -24,6 +28,12 @@ namespace MikesCars.Controllers
         public List<Listing> GetAllUsers()
         {
             return _listingRepo.GetAllAvailableListings();
+        }
+
+        [HttpGet("CheckIfUsersCar/{userId}/{listingId}")]
+        public bool CheckIfUsersCar(int userId, int listingId)
+        {
+            return _listingRepo.CheckIfUsersCar(userId, listingId);
         }
 
         [HttpGet("{id}")]
@@ -63,6 +73,18 @@ namespace MikesCars.Controllers
 
             int id = _listingRepo.PostNewListing(listing);
             fact.listingId = id;
+            
+            for(int i = 0; i < listingfact.images.Length; i++)
+            {
+                ImageModel image = new ImageModel()
+                {
+                    Id = 0,
+                    Img = listingfact.images[i],
+                    ListingId = id,
+                    DisplayOrder = i + 1,
+                };
+                _imageRepo.PostNewImage(image);
+            }
 
             _factRepo.PostFacts(fact);
             return id;
@@ -79,6 +101,17 @@ namespace MikesCars.Controllers
         {
             _listingRepo.Purchased(listingId);
             _cartRepo.Purchased(userId, listingId);
+        }
+
+        [HttpDelete("DeleteListing/{listingId}")]
+
+        public void DeleteListing(int listingId)
+        {
+            _factRepo.DeleteFact(listingId);
+            _cartRepo.DeleteCart(listingId);
+            _imageRepo.DeleteImage(listingId);
+            _favoriteRepo.DeleteFavorite(listingId);
+            _listingRepo.DeleteListing(listingId);
         }
     }
 }

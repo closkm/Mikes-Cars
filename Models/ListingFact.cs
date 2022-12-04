@@ -19,5 +19,8 @@
         public int crashes { get; set; }
         public int miles { get; set; }
         public bool warranty { get; set; }
+
+
+        public string[] images { get; set; }
     }
 }
