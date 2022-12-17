@@ -149,7 +149,7 @@ namespace MikesCars.Repositories
             }
         }
 
-        public List<Listing> GetAllAvailableListings()
+        public List<Listing> GetAllAvailableListings(int userId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -160,7 +160,10 @@ namespace MikesCars.Repositories
                                 SELECT *
                                 FROM [listing]
                                 WHERE purchased = 0
+                                AND id not in ( select listingId from
+                                [cart] where userId = @userId )
                             ";
+                    cmd.Parameters.AddWithValue("@userId", userId);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         List<Listing> listings = new List<Listing>();

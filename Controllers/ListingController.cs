@@ -24,10 +24,10 @@ namespace MikesCars.Controllers
         }
 
 
-        [HttpGet]
-        public List<Listing> GetAllUsers()
+        [HttpGet("GetAvailableListings/{userId}")]
+        public List<Listing> GetAllUsers(int userId)
         {
-            return _listingRepo.GetAllAvailableListings();
+            return _listingRepo.GetAllAvailableListings(userId);
         }
 
         [HttpGet("CheckIfUsersCar/{userId}/{listingId}")]

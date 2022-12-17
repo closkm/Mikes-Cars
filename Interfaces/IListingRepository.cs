@@ -4,7 +4,7 @@ namespace MikesCars.Interfaces
 {
     public interface IListingRepository
     {
-        List<Listing> GetAllAvailableListings();
+        List<Listing> GetAllAvailableListings(int userId);
         Listing GetListingById(int id);
         int PostNewListing(Listing listing);
         void EditListing(Listing listing);
