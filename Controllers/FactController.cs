@@ -26,5 +26,11 @@ namespace MikesCars.Controllers
         {
             return _factRepo.GetFacts(listingId);
         }
-     }
+
+        [HttpPut("EditFacts")]
+        public void EditFacts(Fact fact)
+        {
+            _factRepo.EditFacts(fact);
+        }
+    }
 }

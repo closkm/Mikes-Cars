@@ -38,6 +38,34 @@ namespace MikesCars.Repositories
             }
         }
 
+        public void EditFacts(Fact fact)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE [fact]
+                                SET electric = @electric,
+                                mpg = @mpg,
+                                crashes = @crashes,
+                                miles = @miles,
+                                warranty = @warranty
+                                WHERE listingId = @id
+                            ";
+
+                    cmd.Parameters.AddWithValue("@electric", fact.electric);
+                    cmd.Parameters.AddWithValue("@mpg", fact.mpg);
+                    cmd.Parameters.AddWithValue("@crashes", fact.crashes);
+                    cmd.Parameters.AddWithValue("@miles", fact.miles);
+                    cmd.Parameters.AddWithValue("@warranty", fact.warranty);
+                    cmd.Parameters.AddWithValue("@id", fact.listingId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public Fact GetFacts(int listingId)
         {
             using (SqlConnection conn = Connection)
